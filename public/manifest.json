@@ -4,7 +4,9 @@
   "description": "Timed focus sessions will eliminate noise and calm you down",
   "permissions": [
     "activeTab",
-    "storage"
+    "storage",
+    "alarms",
+    "notifications"
   ],
   "background": {
     "scripts": ["background.js"],

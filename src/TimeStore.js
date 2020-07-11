@@ -1,27 +1,44 @@
 import {toRefs, reactive, readonly} from 'vue'
+import moment from 'moment'
 
 class TimeStore {
   constructor() {
     this.state = reactive(this.init())
     this.updateStateFromStorage()
-    console.log(`on construction: ${this.state.remainingTime}`)
   }
   
   init() {
     return {
-      remainingTime: 25*60,
-      timerStarted: false
+      pausedRemainingTime: null,
+      endTime: moment().add(25, 'm'),
+      timerStarted: false,
+      timerPaused: false
     }
   }
   
   updateStateFromStorage() {
     if (chrome.storage) {
-      let t1 = new Date()
       let st = this.state
-      chrome.storage.sync.get(['remainingTime'], function(result) {
-        st.remainingTime = result.remainingTime
-        console.log(this.state)
-        console.log(`initial storage time sync: ${(new Date()) - t1}`)
+      chrome.storage.sync.get(['endTime', 'pausedRemainingTime', 'timerStarted', 'timerPaused'], function(result) {
+        if (result.endTime)
+          st.endTime = moment(result.endTime)
+        if (result.pausedRemainingTime)
+          st.pausedRemainingTime = result.pausedRemainingTime
+        if (result.timerStarted)
+          st.timerStarted = result.timerStarted
+        if (result.timerPaused)
+          st.timerPaused = result.timerPaused
+      })
+    }
+  }
+  
+  pushStateToStore() {
+    if (chrome.storage) {
+      chrome.storage.sync.set({
+        timerPaused: this.state.timerPaused,
+        timerStarted: this.state.timerStarted,
+        endTime: +this.state.endTime,
+        pausedRemainingTime: this.state.pausedRemainingTime
       })
     }
   }
@@ -30,24 +47,46 @@ class TimeStore {
     return toRefs(this.state)
   }
   
-  countdown1() {
-    if (this.state.timerStarted) {
-      let newtime = this.state.remainingTime - 1
-      if (chrome.storage) {
-        chrome.storage.sync.set({remainingTime: newtime})
+  startCountdown() {
+    let targetTime = null
+    let targetPausedTime = null
+    if(!this.state.timerStarted) {
+      targetTime = moment().add(25, 'm')
+      this.state.timerStarted = true
+    } else {
+      if(this.state.timerPaused) {
+        targetTime = moment().add(this.state.pausedRemainingTime, 's')
+      } else {
+        targetPausedTime = (this.state.endTime - moment())/1000
       }
-      this.state.remainingTime = newtime
-      setTimeout(_ => this.countdown1(), 1000)
+      this.state.timerPaused = !this.state.timerPaused
+    }
+    this.state.endTime = targetTime
+    this.setAlarm(targetTime)
+    this.state.pausedRemainingTime = targetPausedTime
+    this.pushStateToStore()
+  }
+  
+  setAlarm(targetTime) {
+    if(chrome.alarms) {
+      // chrome.alarms.create('breathe_focus', {
+      //   when: Date.now()+4000
+      // })
+      chrome.alarms.clear('breathe_focus')
+      if (targetTime) {
+        chrome.alarms.create('breathe_focus', {
+          when: +targetTime
+        })
+      }
     }
   }
   
-  startCountdown() {
-    this.state.timerStarted = true
-    setTimeout(_ => this.countdown1(), 1000)
-  }
-
   restartCountdown() {
-    this.state.remainingTime = 25*60
+    this.state.timerStarted=false
+    this.state.timerPaused=false
+    this.state.endTime=null
+    this.setAlarm(null)
+    this.pushStateToStore()
   }
 }
 
