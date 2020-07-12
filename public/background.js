@@ -1,12 +1,7 @@
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.set({
-    pausedRemainingTime: null,
-    endTime: null,
-    timerStarted: false,
-    timerPaused: false});
   
   chrome.alarms.onAlarm.addListener(alarm => {
-    console.log(alarm)
+    console.log(`${alarm.name} was triggered`);
     chrome.notifications.create('breathe_focus_global', {
       type: 'basic',
       iconUrl: "images/get_started16.png",
@@ -14,8 +9,15 @@ chrome.runtime.onInstalled.addListener(function() {
       message: 'Nicely done, get some headspace',
       silent: true
     }, _ => {
-      (new Audio('sounds/open-up.mp3')).play()
+      console.log("sound action playing!");
+      (new Audio('sounds/open-up.mp3')).play();
+      chrome.browserAction.setBadgeText({text:'!'});
       // (new Audio('sounds/juntos.mp3')).play()
     })
+  })
+  
+  chrome.commands.onCommand.addListener(command => {
+    console.log('Command:', command);
+    // chrome.browserAction
   })
 });

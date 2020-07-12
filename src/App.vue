@@ -1,10 +1,12 @@
 <template>
+  <p></p>
   <HelloWorld 
     v-bind:remainingTime="remainingTime()" 
     msg="Breathe. Focus."
+    v-bind:timerStarted="timerStarted"
     v-bind:running="timerStarted && !timerPaused"
-    @start="start()"
-    @restart="restart()"/>
+    @start="start"
+    @restart="restart"/>
 </template>
 
 <script>
@@ -25,6 +27,8 @@ export default {
   },
   created() {
     this.autoRefresh()
+    if(chrome.browserAction) 
+      chrome.browserAction.setBadgeText({text:null})
   },
   watch: {
     timerStarted() {
@@ -32,8 +36,8 @@ export default {
     }
   },
   methods: {
-    start() {
-      timeStore.startCountdown()
+    start(x) {
+      timeStore.startCountdown(x)
       this.autoRefresh()
     },
     autoRefresh() {
@@ -47,8 +51,8 @@ export default {
       timeStore.restartCountdown()
     },
     remainingTime() {
-      if (!this.timerStarted) return 25*60 
-      else if (!this.timerPaused) return Math.floor((this.endTime - moment()) / 1000)
+      if (!this.timerStarted) return this.previousStartingTime || 25*60
+      else if (!this.timerPaused) return Math.round((this.endTime - moment()) / 1000)
       else return Math.floor(this.pausedRemainingTime)
     }
   }
