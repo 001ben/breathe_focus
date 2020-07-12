@@ -28,7 +28,7 @@ export default {
   created() {
     this.autoRefresh()
     if(chrome.browserAction) 
-      chrome.browserAction.setBadgeText({text:null})
+      chrome.browserAction.setBadgeText({text:''})
   },
   watch: {
     timerStarted() {

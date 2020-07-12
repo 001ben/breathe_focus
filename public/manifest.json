@@ -1,6 +1,6 @@
 {
   "name": "Breathe Focus",
-  "version": "1.0",
+  "version": "0.0.4",
   "description": "Timed focus sessions will eliminate noise and calm you down",
   "permissions": [
     "activeTab",
