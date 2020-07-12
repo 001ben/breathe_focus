@@ -1,5 +1,5 @@
 <template>
-  <p></p>
+  <!-- <DebugAlarms /> -->
   <HelloWorld 
     v-bind:remainingTime="remainingTime()" 
     msg="Breathe. Focus."
@@ -12,6 +12,7 @@
 <script>
 import {ref, reactive, toRefs} from 'vue'
 import HelloWorld from './components/HelloWorld.vue'
+import DebugAlarms from './components/DebugAlarms.vue'
 import {timeStore} from './TimeStore.js'
 import moment from 'moment'
 
@@ -23,12 +24,15 @@ export default {
     return timeStore.getState()
   },
   components: {
-    HelloWorld
+    HelloWorld,
+    DebugAlarms
   },
   created() {
     this.autoRefresh()
     if(chrome.browserAction) 
-      chrome.browserAction.setBadgeText({text:''})
+      chrome.browserAction.setBadgeText({text:''});
+    if(chrome.notifications)
+      chrome.notifications.clear('breathe_focus_global');
   },
   watch: {
     timerStarted() {

@@ -79,6 +79,7 @@ class TimeStore {
       //   when: Date.now()+4000
       // })
       chrome.alarms.clear('breathe_focus');
+      chrome.storage.sync.set({backgroundAlarmFired: false, postActionFired: false});
       if (targetTime) {
         console.log('alarm *should* be created');
         chrome.alarms.create('breathe_focus', {
