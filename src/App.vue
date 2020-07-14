@@ -24,8 +24,8 @@ export default {
     return timeStore.getState()
   },
   components: {
-    HelloWorld,
-    DebugAlarms
+    HelloWorld
+    /* DebugAlarms */
   },
   created() {
     this.autoRefresh()
