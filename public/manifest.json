@@ -1,6 +1,6 @@
 {
   "name": "Breathe Focus",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Timed focus sessions will eliminate noise and calm you down",
   "permissions": [
     "activeTab",
@@ -16,17 +16,17 @@
   "browser_action": {
     "default_popup": "index.html",
     "default_icon": {
-      "16": "images/get_started16.png",
-      "32": "images/get_started32.png",
-      "48": "images/get_started48.png",
-      "128": "images/get_started128.png"
+      "16": "images/flower-icons-for-free16.png",
+      "32": "images/flower-icons-for-free32.png",
+      "48": "images/flower-icons-for-free48.png",
+      "128": "images/flower-icons-for-free128.png"
     }
   },
-  "icons": {
-    "16": "images/get_started16.png",
-    "32": "images/get_started32.png",
-    "48": "images/get_started48.png",
-    "128": "images/get_started128.png"
+  "icons": { 
+    "16": "images/flower-icons-for-free16.png", 
+    "32": "images/flower-icons-for-free32.png",
+    "48": "images/flower-icons-for-free48.png",
+    "128": "images/flower-icons-for-free128.png"
   },
   "commands": {
     "_execute_browser_action": {
