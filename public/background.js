@@ -6,7 +6,7 @@ chrome.alarms.onAlarm.addListener(alarm => {
   chrome.browserAction.setBadgeText({text:'!'});
   chrome.notifications.create('breathe_focus_global', {
     type: 'basic',
-    iconUrl: "images/get_started16.png",
+    iconUrl: "images/flower-icons-for-free128.png",
     title: 'Focus Complete!',
     message: 'Nicely done, get some headspace',
     silent: false
