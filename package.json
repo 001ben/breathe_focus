@@ -6,7 +6,7 @@
     "build": "vite build --assetsDir assets"
   },
   "dependencies": {
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "tailwindcss": "^1.4.6",
     "vue": "3.0.6"
   },
