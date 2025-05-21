@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Offscreen Document</title>
+</head>
+<body>
+  <audio id="audioPlayer"></audio>
+  <script>
+    chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+      if (message.action === 'playSound') {
+        const audioPlayer = document.getElementById('audioPlayer');
+        audioPlayer.src = message.sound;
+        audioPlayer.play();
+        audioPlayer.onended = () => {
+          // Adding a small delay before closing, though often not strictly necessary
+          setTimeout(() => window.close(), 100); 
+        };
+        sendResponse({status: 'played'});
+      }
+      return true; // Keep the message channel open for sendResponse
+    });
+  </script>
+</body>
+</html>
