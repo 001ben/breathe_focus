@@ -6,12 +6,15 @@
     "build": "vite build --assetsDir assets"
   },
   "dependencies": {
-    "moment": "^2.27.0",
-    "tailwindcss": "^1.4.6",
-    "vue": "3.0.6"
+    "moment": "^2.30.1",
+    "vue": "^3.5.14",
+    "tailwindcss": "^4.1.7"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.6",
-    "vite": "^1.0.0-beta.3"
+    "@tailwindcss/postcss": "^4.1.7",
+    "@vitejs/plugin-vue": "^5.2.4",
+    "@vue/compiler-sfc": "^3.5.14",
+    "vite": "^6.3.5",
+    "autoprefixer": "^10.4.19"
   }
 }
