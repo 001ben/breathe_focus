@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      svelte-toolchain:
+        patterns: ["svelte", "svelte-check", "@sveltejs/*", "vite", "typescript"]
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

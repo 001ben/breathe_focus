@@ -1,17 +1,25 @@
 {
   "name": "breathe_focus",
-  "version": "0.0.7",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
   "scripts": {
     "dev": "vite",
-    "build": "vite build --assetsDir assets"
+    "build": "vite build && node scripts/verify-build.mjs",
+    "preview": "vite preview --host 127.0.0.1",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "test": "node --test tests/*.test.ts"
   },
   "dependencies": {
-    "moment": "^2.27.0",
-    "tailwindcss": "^1.4.6",
-    "vue": "3.0.6"
+    "svelte": "5.57.2"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.6",
-    "vite": "^1.0.0-beta.3"
+    "@sveltejs/vite-plugin-svelte": "7.3.1",
+    "@types/chrome": "0.3.5",
+    "@types/node": "24.19.2",
+    "svelte-check": "4.7.6",
+    "typescript": "6.0.3",
+    "vite": "8.3.4"
   }
 }
